@@ -12,14 +12,16 @@ namespace CarDealership.App_Start
     {
         public MappingProfile()
         {
+            //Domain to Dto(Data Transfer Object)
             Mapper.CreateMap<Car, CarDto>();
-            Mapper.CreateMap<CarDto, Car>();
-
             Mapper.CreateMap<Dealer, DealerDto>();
-            Mapper.CreateMap<DealerDto, Dealer>();
-
             Mapper.CreateMap<AvailabilityType, AvailabilityTypeDto>();
-            Mapper.CreateMap<AvailabilityTypeDto, AvailabilityType>();
+
+            //Dto(Data Transfer Object) to Domain
+            Mapper.CreateMap<CarDto, Car>()
+                .ForMember(c => c.Id,opt =>opt.Ignore());            
+            Mapper.CreateMap<DealerDto, Dealer>()
+                .ForMember(c => c.Id, opt => opt.Ignore()); ;           
 
 
 

@@ -53,22 +53,27 @@ namespace CarDealership.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Save(CarViewModel carViewModel)
+        public ActionResult Save(Car car)
         {
             if (!ModelState.IsValid)
             {
+                var carViewModel = new CarViewModel
+                {
+                    Car = car,
+                    AvailabilityTypes = _context.AvailabilityTypes.ToList()
+                };
                 return View("CarForm",carViewModel);
             }
-            if (carViewModel.Car.Id == 0)
+            if (car.Id == 0)
             {
-                _context.Cars.Add(carViewModel.Car);
+                _context.Cars.Add(car);
             }
             else
             {
-                var carInDb = _context.Cars.Single(a => a.Id == carViewModel.Car.Id);
-                carInDb.Make = carViewModel.Car.Make;
-                carInDb.Model = carViewModel.Car.Model;
-                carInDb.Color = carViewModel.Car.Color;
+                var carInDb = _context.Cars.Single(a => a.Id == car.Id);
+                carInDb.Make = car.Make;
+                carInDb.Model = car.Model;
+                carInDb.Color = car.Color;
             }
            // _context.SaveChanges();
             return RedirectToAction("Index", "Cars");
