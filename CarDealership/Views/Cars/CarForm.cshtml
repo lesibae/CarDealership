@@ -1,0 +1,83 @@
+﻿@model  CarDealership.ViewModel.CarViewModel
+@{
+    ViewBag.Title = "CarForm";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<h2>New Car</h2>
+@using (Html.BeginForm("Save", "Cars"))
+{
+    
+<div class="form-group">
+    @Html.LabelFor(a => a.Car.Make)
+    <div class="tt-container">
+        @Html.TextBoxFor(a => a.Car.Make, new { @class = "form-control" })
+    </div>    
+    @Html.ValidationMessageFor(a => a.Car.Make)
+
+</div>
+<div class="form-group">
+
+    @Html.LabelFor(a => a.Car.Color)
+    <div class="tt-container">
+        @Html.TextBoxFor(a => a.Car.Color, new { @class = "form-control" })
+    </div>    
+    @Html.ValidationMessageFor(a => a.Car.Color)
+</div>
+    <div class="form-group">
+        @Html.LabelFor(a => a.Car.Model)
+        @Html.TextBoxFor(a => a.Car.Model, new { @class = "form-control" })
+        @Html.ValidationMessageFor(a => a.Car.Model)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(a => a.Car.DealerName)
+        <div class="tt-container">
+            @Html.TextBoxFor(a => a.Car.DealerName, new { @class = "form-control", id = "dealers" })
+        </div>        
+        @Html.ValidationMessageFor(a => a.Car.DealerName)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(a => a.Car.AvailabilityTypeId)
+        <div class="tt-container">
+            @Html.DropDownListFor(a => a.Car.AvailabilityTypeId, new SelectList(Model.AvailabilityTypes, "Id", "Availability"), "Select Availability Type", new { @class = "form-control" })
+        </div>        
+        @Html.ValidationMessageFor(a => a.Car.AvailabilityTypeId)
+    </div>
+
+    @Html.HiddenFor(m => m.Car.Id)
+    @Html.AntiForgeryToken()
+    <button type="submit" class="btn btn-primary">Save</button>
+
+}
+@section scripts
+{
+    <script>
+        $(document).ready(function () {
+            var viewModel = {};
+            var dealers = new Bloodhound({
+              datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
+              queryTokenizer: Bloodhound.tokenizers.whitespace,
+              remote: {
+                url: 'https://localhost:44359/api/dealers/getdealers?%QUERY',
+                wildcard: '%QUERY'
+              }
+            });
+
+            $('#dealers').typeahead({
+                minLength: 3,
+                highlight: true
+            }, {
+              name: 'dealers',
+              display: 'name',
+              source: dealers
+                }).on("typeahead:select", function (e, dealer) {
+                    viewModel.dealerName = dealer.name;
+                });
+        });
+    </script>
+
+
+
+
+}

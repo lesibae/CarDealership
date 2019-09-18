@@ -1,0 +1,36 @@
+﻿@model CarDealership.Models.Dealer
+@{
+    ViewBag.Title = "DealerForm";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>New Dealer</h2>
+
+
+@using (Html.BeginForm("Save", "Dealers"))
+{
+    <div class="form-group">
+        @Html.LabelFor(a => a.Name)
+        @Html.TextBoxFor(a => a.Name, new { @class = "form-control" })
+        @Html.ValidationMessageFor(a => a.Name)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(a => a.Address)
+        @Html.TextAreaFor(a => a.Address, new { @class = "form-control" })
+        @Html.ValidationMessageFor(a => a.Address)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(a => a.TelNumber)
+        @Html.TextBoxFor(a => a.TelNumber, new { @class = "form-control" })
+        @Html.ValidationMessageFor(a => a.TelNumber)
+    </div>
+
+    @Html.HiddenFor(m => m.Id)
+    @Html.AntiForgeryToken()
+    <button type="submit" class="btn btn-primary">Save</button>
+
+}
+@section scripts
+{
+    @Scripts.Render("~/bundles/jqueryval")
+}

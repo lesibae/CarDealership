@@ -1,0 +1,86 @@
+﻿@model IEnumerable<CarDealership.Models.Dealer>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Dealers</h2>
+<p> @Html.ActionLink("New Dealer", "New", "Dealers", null, new { @class = "btn btn-primary" })</p>
+
+    <table id="dealers" class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Address</th>
+                <th>Tel Number</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @*@foreach (var dealers in Model)
+            {
+                <tr>
+                    <td>@dealers.Name</td>
+                    <td>@dealers.Address</td>
+                    <td>@dealers.TelNumber</td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", "Dealers", new { id = dealers.Id }, null) /                      
+                        <button data-car-id="@dealers.Id" class="btn-link js-delete">Delete</button>
+
+                    </td>
+                </tr>
+            }*@
+        </tbody>
+    </table>
+
+
+
+@section scripts
+{
+    <script>
+        $(document).ready(function () {
+           var dealerTable = $("#dealers").DataTable({
+                ajax: {
+                    url: "/api/dealers/Getdealers",
+                    dataSrc: ""
+                },
+                columns: [
+                    {
+                        data:"name"
+                    },
+                    {
+                        data:"address"
+                    },
+                    {
+                        data:"telNumber"
+                    }
+                    ,
+                    {
+                        data: "id",
+                        render: function (data) {
+                            return "<a href=https://localhost:44359/dealers/edit/" + data + ">Edit</a> <a class='btn-link js-delete' data-dealer-id=" + data + ">Delete</a>";
+
+                        }
+                    }
+                ]
+            });
+
+            $("#dealers").on("click",".js-delete", function () {
+                var button = $(this);
+                bootbox.confirm("Are you sure you want to delete this dealer?", function (result) {
+                    if (result) {
+                         $.ajax({
+                         url: "/api/dealers/Deletedealer/" + button.attr("data-dealer-id"),
+                         method: "DELETE",
+                             success: function () {
+                                 dealerTable.row(button.parents("tr")).remove().draw();
+                         }                        
+                     });
+                    }
+                });
+                
+            });
+        });
+        
+    </script>
+}
