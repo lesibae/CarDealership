@@ -63,7 +63,7 @@
               datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
               queryTokenizer: Bloodhound.tokenizers.whitespace,
               remote: {
-                url: 'https://localhost:44359/api/dealers/getdealers?%QUERY',
+                url: '@ViewBag.BaseURL/api/dealers/getdealers?%QUERY',
                 wildcard: '%QUERY'
               }
             });

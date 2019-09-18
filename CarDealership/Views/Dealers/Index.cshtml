@@ -29,7 +29,7 @@
         $(document).ready(function () {
            var dealerTable = $("#dealers").DataTable({
                 ajax: {
-                    url: "/api/dealers/Getdealers",
+                    url: `@ViewBag.BaseURL/api/dealers/Getdealers`,
                     dataSrc: ""
                 },
                 columns: [
@@ -45,9 +45,8 @@
                     ,
                     {
                         data: "id",
-                        render: function (data) {
-                            return "<a href=https://localhost:44359/dealers/edit/" + data + ">Edit</a> <a class='btn-link js-delete' data-dealer-id=" + data + ">Delete</a>";
-
+                        render: function (data) {                            
+                            return `<a href='@ViewBag.BaseURL/dealers/edit/${data}'>Edit</a> <a class='btn-link js-delete' data-dealer-id='${data}'>Delete</a>`;
                         }
                     }
                 ]
@@ -58,7 +57,7 @@
                 bootbox.confirm("Are you sure you want to delete this dealer?", function (result) {
                     if (result) {
                          $.ajax({
-                         url: "/api/dealers/Deletedealer/" + button.attr("data-dealer-id"),
+                             url: `@ViewBag.BaseURL/api/dealers/Deletedealer/${button.attr("data-dealer-id")}`,
                          method: "DELETE",
                              success: function () {
                                  dealerTable.row(button.parents("tr")).remove().draw();

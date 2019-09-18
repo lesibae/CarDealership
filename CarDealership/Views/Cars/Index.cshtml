@@ -32,7 +32,7 @@
         $(document).ready(function () {
            var carTable = $("#cars").DataTable({
                 ajax: {
-                    url: "/api/cars/Getcars",
+                    url: `@ViewBag.BaseURL/api/cars/Getcars`,
                     dataSrc: ""
                 },
                 columns: [
@@ -59,7 +59,7 @@
                     {
                         data: "id",
                         render: function (data) {
-                            return "<a href=https://localhost:44359/cars/edit/" + data + ">Edit</a> <a class='btn-link js-delete' data-car-id=" + data + ">Delete</a>";
+                            return `<a href='@ViewBag.BaseURL/cars/edit/${data}'>Edit</a> <a class='btn-link js-delete' data-car-id='${data}'>Delete</a>`;
 
                         }
                     }
@@ -71,7 +71,7 @@
                 bootbox.confirm("Are you sure you want to delete this car?", function (result) {
                     if (result) {
                          $.ajax({
-                         url: "/api/cars/Deletecar/" + button.attr("data-car-id"),
+                         url: `@ViewBag.BaseURL/api/cars/Deletecar/${button.attr("data-car-id")}`,
                          method: "DELETE",
                              success: function () {
                                  carTable.row(button.parents("tr")).remove().draw();

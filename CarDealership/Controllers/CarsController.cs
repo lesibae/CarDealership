@@ -2,6 +2,7 @@
 using CarDealership.ViewModel;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -10,6 +11,8 @@ namespace CarDealership.Controllers
 {
     public class CarsController : Controller
     {
+        readonly string BaseURL = ConfigurationManager.AppSettings["BaseURL"];
+
         private ApplicationDbContext _context;
         public CarsController()
         {
@@ -22,7 +25,8 @@ namespace CarDealership.Controllers
         // GET: Cars
         public ActionResult Index()
         {
-            var cars = _context.Cars;            
+            var cars = _context.Cars;
+            ViewBag.BaseURL = this.BaseURL;
             return View(cars);
         }
 
@@ -41,6 +45,9 @@ namespace CarDealership.Controllers
                 Car = new Car(),
                 AvailabilityTypes = _context.AvailabilityTypes.ToList()
             };
+
+            ViewBag.BaseURL = this.BaseURL;
+
             return View("CarForm", viewModel);
         }
         public ActionResult Edit(int id)
