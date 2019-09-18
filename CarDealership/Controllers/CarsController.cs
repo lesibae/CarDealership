@@ -35,12 +35,12 @@ namespace CarDealership.Controllers
         }
         public ActionResult New()
         {
-            var availabilityTypes = _context.AvailabilityTypes.ToList();
+            
             var viewModel = new CarViewModel
             {
-                AvailabilityTypes = availabilityTypes
+                Car = new Car(),
+                AvailabilityTypes = _context.AvailabilityTypes.ToList()
             };
-            //var newCar = new Car() { };
             return View("CarForm", viewModel);
         }
         public ActionResult Edit(int id)
@@ -49,7 +49,13 @@ namespace CarDealership.Controllers
             if (car == null)
                 return HttpNotFound();
 
-            return View("CarForm", car);
+            var viewModel = new CarViewModel
+            {
+                Car = car,
+                AvailabilityTypes = _context.AvailabilityTypes.ToList()
+            };
+
+            return View("CarForm", viewModel);
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -74,8 +80,11 @@ namespace CarDealership.Controllers
                 carInDb.Make = car.Make;
                 carInDb.Model = car.Model;
                 carInDb.Color = car.Color;
+                carInDb.DealerName = car.DealerName;
+                carInDb.AvailabilityTypeId = car.AvailabilityTypeId;
             }
-           // _context.SaveChanges();
+            _context.SaveChanges();
+
             return RedirectToAction("Index", "Cars");
         }
 

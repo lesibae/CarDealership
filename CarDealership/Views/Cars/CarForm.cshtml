@@ -15,21 +15,24 @@
         @Html.TextBoxFor(a => a.Car.Make, new { @class = "form-control" })
     </div>    
     @Html.ValidationMessageFor(a => a.Car.Make)
-
 </div>
-<div class="form-group">
 
+<div class="form-group">
     @Html.LabelFor(a => a.Car.Color)
     <div class="tt-container">
         @Html.TextBoxFor(a => a.Car.Color, new { @class = "form-control" })
     </div>    
     @Html.ValidationMessageFor(a => a.Car.Color)
 </div>
-    <div class="form-group">
-        @Html.LabelFor(a => a.Car.Model)
+
+<div class="form-group">
+    @Html.LabelFor(a => a.Car.Model)
+    <div class="tt-container">
         @Html.TextBoxFor(a => a.Car.Model, new { @class = "form-control" })
-        @Html.ValidationMessageFor(a => a.Car.Model)
-    </div>
+    </div>    
+    @Html.ValidationMessageFor(a => a.Car.Model)
+</div>
+
     <div class="form-group">
         @Html.LabelFor(a => a.Car.DealerName)
         <div class="tt-container">
@@ -37,6 +40,7 @@
         </div>        
         @Html.ValidationMessageFor(a => a.Car.DealerName)
     </div>
+
     <div class="form-group">
         @Html.LabelFor(a => a.Car.AvailabilityTypeId)
         <div class="tt-container">
@@ -65,7 +69,7 @@
             });
 
             $('#dealers').typeahead({
-                minLength: 3,
+                minLength: 2,
                 highlight: true
             }, {
               name: 'dealers',
@@ -76,8 +80,5 @@
                 });
         });
     </script>
-
-
-
 
 }

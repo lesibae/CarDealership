@@ -17,19 +17,7 @@
             </tr>
         </thead>
         <tbody>
-            @*@foreach (var dealers in Model)
-            {
-                <tr>
-                    <td>@dealers.Name</td>
-                    <td>@dealers.Address</td>
-                    <td>@dealers.TelNumber</td>
-                    <td>
-                        @Html.ActionLink("Edit", "Edit", "Dealers", new { id = dealers.Id }, null) /                      
-                        <button data-car-id="@dealers.Id" class="btn-link js-delete">Delete</button>
-
-                    </td>
-                </tr>
-            }*@
+           
         </tbody>
     </table>
 

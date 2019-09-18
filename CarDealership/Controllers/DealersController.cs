@@ -33,7 +33,7 @@ namespace CarDealership.Controllers
         }
         public ActionResult New()
         {
-            var newDealer = new Dealer() { };
+            var newDealer = new Dealer();
             return View("DealerForm", newDealer);
         }
         public ActionResult Edit(int id)
